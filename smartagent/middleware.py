@@ -9,16 +9,23 @@ NEEDED_VALUES = set(['browser', 'majorver', 'minorver', 'cookies',
 
 class UserAgentDetectorMiddleware(object):
 
-    def process_request(self, request):
-        """
-        Add browser features to request object
-        """
-        _user_agent = request.META.get('HTTP_USER_AGENT', 'Unknown')
-        _user_agent = detect_user_agent(_user_agent)
-        user_agent = _user_agent.copy()
+	def _get_browser_info(self, request):
+		'''
+		Add browser features to request object
+        '''
+		_user_agent = request.META.get('HTTP_USER_AGENT', 'Unknown')
+		_user_agent = detect_user_agent(_user_agent)
+		user_agent = _user_agent.copy()
 
-        keys = user_agent.keys()
-        for key in keys:
-            if key not in NEEDED_VALUES:
-                user_agent.pop(key)
-        request.browser_info = user_agent
+		keys = user_agent.keys()
+		for key in keys:
+			if key not in NEEDED_VALUES:
+				user_agent.pop(key)
+		request.browser_info = user_agent
+		
+	def process_request(self, request):
+		self._get_browser_info(request)
+
+	def process_template_response(self, request):
+		self._get_browser_info(request)
+	
