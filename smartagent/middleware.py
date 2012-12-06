@@ -25,7 +25,8 @@ class UserAgentDetectorMiddleware(object):
 		
 	def process_request(self, request):
 		self._get_browser_info(request)
+		return None
 
 	def process_template_response(self, request, response):
 		self._get_browser_info(request)
-	
+		return response
