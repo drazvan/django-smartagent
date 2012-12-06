@@ -12,7 +12,7 @@ class UserAgentDetectorMiddleware(object):
 	def _get_browser_info(self, request):
 		'''
 		Add browser features to request object
-        '''
+		'''
 		_user_agent = request.META.get('HTTP_USER_AGENT', 'Unknown')
 		_user_agent = detect_user_agent(_user_agent)
 		user_agent = _user_agent.copy()
