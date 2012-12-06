@@ -48,6 +48,23 @@ Add the middleware
         'smartagent.middleware.UserAgentDetectorMiddleware',
     )
 
+To access request.browser_info in templates, add the following to TEMPLATE_CONTEXT_PROCESSORS. 
+
+::
+
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.core.context_processors.request',
+    )
+
+If you are using the django.contrib.admin app, you may also need to add the template context processor for that as well:
+
+::
+
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.core.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
+    )
+
 **The middleware** is used to attach the browser characteristics to the request object, which will be accessible through **request.browser_info**
 
 User-Agent data file
